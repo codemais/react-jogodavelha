@@ -32,7 +32,7 @@ export default class Game extends Component {
         document.getElementById(board[i][0]).style.backgroundColor = '#01DFA5';
         document.getElementById(board[i][1]).style.backgroundColor = '#01DFA5';
         document.getElementById(board[i][2]).style.backgroundColor = '#01DFA5';
-        break;
+        return
       }
     }
 
