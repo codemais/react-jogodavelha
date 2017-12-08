@@ -4,7 +4,6 @@ import Trace from './Trace';
 import Panel from './Panel';
 
 export default class Game extends Component {
-
   constructor(props) {
     super(props);
     this.squares = [];
@@ -12,28 +11,30 @@ export default class Game extends Component {
     this.state = this.initialState();
   }
 
-  initialState(symbol = "X"){
+  initialState(symbol = 'X') {
     return {
       symbol: symbol,
-      xIsCurrentSymbol: symbol === "X" ? true : false,
+      xIsCurrentSymbol: symbol === 'X' ? true : false,
       finished: false,
-      plays: 0,
-    }
+      plays: 0
+    };
   }
 
-  checkRules(rules, symbol){
+  checkRules(rules, symbol) {
     let check = false;
-    rules.forEach((rule) => {
-      let filtered = this.squares.filter(function (square) {
-        return rule.includes(square.props.index) && square.state.symbol === symbol;
+    rules.forEach(rule => {
+      let filtered = this.squares.filter(function(square) {
+        return (
+          rule.includes(square.props.index) && square.state.symbol === symbol
+        );
       });
 
       if (filtered.length === 3) {
         check = true;
-        filtered.forEach((square) => {
-          square.setState({ color: '#3ADF00'});
+        filtered.forEach(square => {
+          square.setState({ color: '#3ADF00' });
         });
-        this.setState({ finished: true }, function () {
+        this.setState({ finished: true }, function() {
           this.write("'" + symbol + "' foi o vencedor!!!");
         });
       }
@@ -45,66 +46,77 @@ export default class Game extends Component {
 
   isWinner() {
     const rules = [
-      [0, 1, 2], [3, 4, 5], [6, 7, 8], // linhas
-      [0, 3, 6], [1, 4, 7], [2, 5, 8], // colunas
-      [0, 4, 8], [2, 4, 6] // diagonais
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8], // linhas
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8], // colunas
+      [0, 4, 8],
+      [2, 4, 6] // diagonais
     ];
-    let { xIsCurrentSymbol, symbol, plays } = this.state
+    let { xIsCurrentSymbol, symbol, plays } = this.state;
     let isWinner = this.checkRules(rules, symbol);
 
     if (plays === this.squares.length && !isWinner) {
-      this.setState({ finished: true }, function () {
-        this.write("Ops... Deu velha!!! Não houve vencedor.");
+      this.setState({ finished: true }, function() {
+        this.write('Ops... Deu velha!!! Não houve vencedor.');
       });
     } else {
-      let nextSymbol = xIsCurrentSymbol ? "O" : "X"
-      this.setState({ symbol: nextSymbol, xIsCurrentSymbol: !xIsCurrentSymbol });
+      let nextSymbol = xIsCurrentSymbol ? 'O' : 'X';
+      this.setState({
+        symbol: nextSymbol,
+        xIsCurrentSymbol: !xIsCurrentSymbol
+      });
     }
   }
 
-
   update(index) {
-    let { symbol, plays } = this.state
-    this.write("Última jogada: " + symbol + " quadrado [" + index + "]")
-    this.setState({ plays: plays + 1 }, function () {
+    let { symbol, plays } = this.state;
+    this.write('Última jogada: ' + symbol + ' quadrado [' + index + ']');
+    this.setState({ plays: plays + 1 }, function() {
       this.isWinner();
     });
   }
 
   reset(symbol) {
-    this.setState(this.initialState(symbol))
+    this.setState(this.initialState(symbol));
     this.trace.reset();
-    this.squares.forEach((square) => { square.reset() })
+    this.squares.forEach(square => {
+      square.reset();
+    });
   }
 
+  write(text) {
+    this.trace.write(text);
+  }
 
-  write(text) { this.trace.write(text) }
+  addSquare(square) {
+    this.squares.push(square);
+  }
 
-  addSquare(square) { this.squares.push(square) }
-
-  setTrace(trace) { this.trace = trace }
-
+  setTrace(trace) {
+    this.trace = trace;
+  }
 
   render() {
     return (
-      <div className='row  mt-5'>
-        <div className='col-md-4 trace'>
-          <Trace callbackParentSetGameTrace={(trace) => this.setTrace(trace)}/>
+      <div className="row  mt-5">
+        <div className="col-md-4 trace">
+          <Trace callbackParentSetGameTrace={trace => this.setTrace(trace)} />
         </div>
-        <div className='col-md-4'>
+        <div className="col-md-4">
           <Board
             currentSymbol={this.state.symbol}
             isGameOver={this.state.finished}
-            callbackParentAddSquare={(square) => this.addSquare(square)}
-            callbackParentUpdateGame={(index) => this.update(index)}
+            callbackParentAddSquare={square => this.addSquare(square)}
+            callbackParentUpdateGame={index => this.update(index)}
           />
         </div>
-        <div className='col-md-4'>
-          <Panel callbackParentResetGame={(symbol) => this.reset(symbol)} />
+        <div className="col-md-4">
+          <Panel callbackParentResetGame={symbol => this.reset(symbol)} />
         </div>
       </div>
     );
   }
 }
-
-
