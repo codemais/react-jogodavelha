@@ -1,0 +1,16 @@
+.square {
+  border-bottom: dashed 2px gray;
+  border-right: dashed 2px gray;
+  min-height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.square:last-child {
+  border-right: 0px;
+}
+
+.square.last-row {
+  border-bottom: 0px;
+}
