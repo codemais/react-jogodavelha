@@ -24,7 +24,7 @@ export default class Trace extends Component {
       item.class = 'old-text';
       return item;
     });
-    this.setState({ items: [{ text: text, class: 'current-text' }, ...items] });
+    this.setState({ items: [...items, { text: text, class: 'current-text' }] });
   }
 
   render() {
