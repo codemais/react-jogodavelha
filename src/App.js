@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Game from './components/Game';
 import './assets/bootstrap.css';
 import './assets/square.css';
-import './assets/trace.css';
+import './assets/terminal.css';
 
 export default class App extends Component {
   render() {

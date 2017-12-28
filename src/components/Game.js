@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import Board from './Board';
-import Trace from './Trace';
+import Terminal from './Terminal';
 import Panel from './Panel';
 
 export default class Game extends Component {
   constructor(props) {
     super(props);
     this.squares = [];
-    this.trace = null;
+    this.terminal = null;
     this.state = this.initialState();
   }
 
@@ -46,14 +46,9 @@ export default class Game extends Component {
 
   isWinner() {
     const rules = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8], // linhas
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8], // colunas
-      [0, 4, 8],
-      [2, 4, 6] // diagonais
+      [0, 1, 2], [3, 4, 5], [6, 7, 8], // linhas
+      [0, 3, 6], [1, 4, 7], [2, 5, 8], // colunas
+      [0, 4, 8], [2, 4, 6] // diagonais
     ];
     let { xIsCurrentSymbol, symbol, plays } = this.state;
     let isWinner = this.checkRules(rules, symbol);
@@ -81,29 +76,29 @@ export default class Game extends Component {
 
   reset(symbol) {
     this.setState(this.initialState(symbol));
-    this.trace.reset();
+    this.terminal.reset();
     this.squares.forEach(square => {
       square.reset();
     });
   }
 
   write(text) {
-    this.trace.write(text);
+    this.terminal.write(text);
   }
 
   addSquare(square) {
     this.squares.push(square);
   }
 
-  setTrace(trace) {
-    this.trace = trace;
+  setTerminal(terminal) {
+    this.terminal = terminal;
   }
 
   render() {
     return (
       <div className="row  mt-5">
-        <div className="col-md-4 trace">
-          <Trace callbackParentSetGameTrace={trace => this.setTrace(trace)} />
+        <div className="col-md-4 terminal">
+          <Terminal callbackSetTerminal={terminal => this.setTerminal(terminal)} />
         </div>
         <div className="col-md-4">
           <Board

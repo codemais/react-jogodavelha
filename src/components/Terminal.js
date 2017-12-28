@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Info from './Info';
 
-export default class Trace extends Component {
+export default class Terminal extends Component {
   constructor() {
     super();
     this.state = this.initialState();
@@ -16,7 +16,7 @@ export default class Trace extends Component {
   }
 
   componentDidMount() {
-    this.props.callbackParentSetGameTrace(this);
+    this.props.callbackSetTerminal(this);
   }
 
   write(text) {
