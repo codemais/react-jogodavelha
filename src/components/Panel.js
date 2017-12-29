@@ -11,7 +11,7 @@ export default class Panel extends Component {
   }
 
   onClick(e) {
-    this.props.callbackParentResetGame(this.state.selectedOption);
+    this.props.gameReset(this.state.selectedOption);
   }
 
   render() {
@@ -25,8 +25,7 @@ export default class Panel extends Component {
               id="btnRadios1"
               value="X"
               checked={this.state.selectedOption === 'X'}
-              onChange={this.onChange.bind(this)}
-            />
+              onChange={this.onChange.bind(this)} />
             Primeiro Jogador X
           </label>
         </div>
@@ -38,16 +37,14 @@ export default class Panel extends Component {
               id="btnRadios2"
               value="O"
               checked={this.state.selectedOption === 'O'}
-              onChange={this.onChange.bind(this)}
-            />
+              onChange={this.onChange.bind(this)} />
             Primeiro Jogador O
           </label>
         </div>
         <button
           type="button"
           className="btn btn-primary"
-          onClick={this.onClick.bind(this)}
-        >
+          onClick={this.onClick.bind(this)} >
           Reiniciar partida
         </button>
       </div>

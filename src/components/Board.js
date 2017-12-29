@@ -2,12 +2,68 @@ import React, { Component } from 'react';
 import Square from './Square';
 
 export default class Board extends Component {
-  callbackParentAddSquare(square) {
-    this.props.callbackParentAddSquare(square);
+
+  constructor(props) {
+    super(props);
+    this.squares = [];
   }
 
-  callbackParentUpdateGame(index) {
-    this.props.callbackParentUpdateGame(index);
+  componentDidMount() {
+    this.props.gameSetBoard(this);
+  }
+
+  addSquare(square) {
+    this.squares.push(square);
+  }
+
+  actionNotify(index) {
+    if (this.checkRules()) {
+      this.props.gameWinnerNotify();
+    } else {
+      this.props.gameActionNotify(index);
+    }
+  }
+
+  checkRules() {
+    const rules = [
+      [0, 1, 2], [3, 4, 5], [6, 7, 8], // linhas
+      [0, 3, 6], [1, 4, 7], [2, 5, 8], // colunas
+      [0, 4, 8], [2, 4, 6] // diagonais
+    ];
+    let check
+    let { currentSymbol } = this.props;
+
+    rules.forEach(rule => {
+      let filteredSquares = this.squares.filter(function (square) {
+        return (rule.includes(square.state.index) && square.state.symbol === currentSymbol)
+      });
+
+      if (filteredSquares.length === 3) {
+        this.squares.forEach(square => {
+          square.disable();
+        });
+
+        filteredSquares.forEach(square => {
+          square.paint();
+        });
+
+        check = true;
+      }
+    });
+
+    return check;
+  }
+
+  reset(){
+    this.squares.forEach(square => {
+      square.reset();
+    });
+  }
+
+  disableSquares(){
+    this.squares.forEach(square => {
+      square.disable();
+    });
   }
 
   render() {
@@ -21,11 +77,9 @@ export default class Board extends Component {
               class={'col-md-4 square'}
               currentSymbol={this.props.currentSymbol}
               isGameOver={this.props.isGameOver}
-              callbackParentAddSquare={square =>
-                this.callbackParentAddSquare(square)
-              }
-              callbackParentUpdateGame={index =>
-                this.callbackParentUpdateGame(index)
+              boardAddSquare={ square => this.addSquare(square) }
+              boardActionNotify={index =>
+                this.actionNotify(index)
               }
             />
           ))}
@@ -38,11 +92,9 @@ export default class Board extends Component {
               class={'col-md-4 square'}
               currentSymbol={this.props.currentSymbol}
               isGameOver={this.props.isGameOver}
-              callbackParentAddSquare={square =>
-                this.callbackParentAddSquare(square)
-              }
-              callbackParentUpdateGame={index =>
-                this.callbackParentUpdateGame(index)
+              boardAddSquare={ square => this.addSquare(square) }
+              boardActionNotify={index =>
+                this.actionNotify(index)
               }
             />
           ))}
@@ -55,11 +107,9 @@ export default class Board extends Component {
               class={'col-md-4 square last-row'}
               currentSymbol={this.props.currentSymbol}
               isGameOver={this.props.isGameOver}
-              callbackParentAddSquare={square =>
-                this.callbackParentAddSquare(square)
-              }
-              callbackParentUpdateGame={index =>
-                this.callbackParentUpdateGame(index)
+              boardAddSquare={ square => this.addSquare(square) }
+              boardActionNotify={index =>
+                this.actionNotify(index)
               }
             />
           ))}

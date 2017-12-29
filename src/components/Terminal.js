@@ -16,7 +16,7 @@ export default class Terminal extends Component {
   }
 
   componentDidMount() {
-    this.props.callbackSetTerminal(this);
+    this.props.gameSetTerminal(this);
   }
 
   write(text) {
