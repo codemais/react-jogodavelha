@@ -16,7 +16,7 @@ export default class Panel extends Component {
 
   render() {
     return (
-      <div className="">
+      <div>
         <div className="form-check">
           <label className="form-check-label">
             <input

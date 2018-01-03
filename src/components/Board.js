@@ -68,8 +68,8 @@ export default class Board extends Component {
 
   render() {
     return (
-      <div className="mx-4">
-        <div className="row justify-content-md-center">
+      <div className="board">
+        <div className="row">
           {[0, 1, 2].map((v, k) => (
             <Square
               key={v}
@@ -84,7 +84,7 @@ export default class Board extends Component {
             />
           ))}
         </div>
-        <div className="row justify-content-md-center">
+        <div className="row">
           {[3, 4, 5].map((v, k) => (
             <Square
               key={v}
@@ -99,7 +99,7 @@ export default class Board extends Component {
             />
           ))}
         </div>
-        <div className="row justify-content-md-center">
+        <div className="row">
           {[6, 7, 8].map((v, k) => (
             <Square
               key={v}
