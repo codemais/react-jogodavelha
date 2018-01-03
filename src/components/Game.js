@@ -61,7 +61,7 @@ export default class Game extends Component {
   render() {
     return (
       <div className="row">
-        <div className="col-md-4">
+        <div className="col-md-5">
           <Terminal gameSetTerminal={ terminal => this.setTerminal(terminal) } />
         </div>
         <div className="col-md-4">
@@ -72,7 +72,7 @@ export default class Game extends Component {
             gameWinnerNotify={ () => this.winnerNotify() }
           />
         </div>
-        <div className="col-md-4">
+        <div className="col-md-3">
           <Panel gameReset={ symbol => this.reset(symbol) } />
         </div>
       </div>
