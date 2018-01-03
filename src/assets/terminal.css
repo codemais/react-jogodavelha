@@ -9,7 +9,9 @@ p {
 }
 
 .terminal{
-  background-color: black;
+	background-color: black;
+	padding: 15px 0px 0px 10px;
+	height: 100%;
 }
 
 .current-text {

@@ -29,12 +29,10 @@ export default class Terminal extends Component {
 
   render() {
     return (
-      <div className="pre-scrollable">
-        <div className="mt-3">
-          {this.state.items.map((item, k) => (
-            <Info key={k} text={item.text} class={item.class} />
-          ))}
-        </div>
+      <div className="terminal">
+        {this.state.items.map((item, k) => (
+          <Info key={k} text={item.text} class={item.class} />
+        ))}
       </div>
     );
   }
