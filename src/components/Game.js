@@ -60,8 +60,8 @@ export default class Game extends Component {
 
   render() {
     return (
-      <div className="row  mt-5">
-        <div className="col-md-4 terminal">
+      <div className="row">
+        <div className="col-md-4">
           <Terminal gameSetTerminal={ terminal => this.setTerminal(terminal) } />
         </div>
         <div className="col-md-4">
